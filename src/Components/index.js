@@ -5,3 +5,5 @@ export { default as Login } from "./Login";
 export { default as CreatePost } from "./CreatePost" ;
 export { default as Logout } from "./Logout";
 export { default as Profile } from "./Profile"
+
+// all components are here
