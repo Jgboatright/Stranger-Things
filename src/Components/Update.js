@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 
-const CreatePost = ({ posts, setPosts }) => {
+const Update = ({ posts, setPosts, postId, setPostId }) => {
     const [title, setTitle] = useState([]);
     const [description, setDescription] = useState([]);
     const [price, setPrice] = useState([]);
@@ -11,8 +11,9 @@ const CreatePost = ({ posts, setPosts }) => {
         e.preventDefault();
         try {
             console.log('title, description, price:', title, description, price);
-            const response = await fetch('https://strangers-things.herokuapp.com/api/2301-ftb-mt-web-ft/posts', {
-                method: 'POST',
+            console.log('postId: ', postId);
+            const response = await fetch(`https://strangers-things.herokuapp.com/api/2301-ftb-mt-web-ft/posts/${postId}`, {
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'Application/json',
                     'Authorization': `Bearer ${localStorage.getItem("token")}`,
@@ -30,11 +31,21 @@ const CreatePost = ({ posts, setPosts }) => {
             });
             const data = await response.json();
             console.log('data', data);
-            setPosts([...posts]);
+            if(data && data.title) {
+                const newPosts = posts.map(post => {
+                    if(post.id === postId) {
+                        return data;
+                    } else {
+                        return post;
+                    }
+                });
+                setPosts(newPosts);
+                setTitle('');
+                setDescription('');
+                setPrice('');
+                setPostId(null);
+            }
 
-            setTitle('');
-            setDescription('');
-            setPrice('');
 
             document.location.reload();
         } catch (error) {
@@ -46,7 +57,7 @@ const CreatePost = ({ posts, setPosts }) => {
 
         <div>
             <h4>
-                Create a Post
+                Update a Post
             </h4>
 
             <form onSubmit={submitHandler}>
@@ -70,7 +81,7 @@ const CreatePost = ({ posts, setPosts }) => {
                 />
 
                 <button type="submit">
-                    Submit
+                    Update
                 </button>
 
             </form>
@@ -80,4 +91,4 @@ const CreatePost = ({ posts, setPosts }) => {
 
 }
 
-export default CreatePost;
+export default Update;

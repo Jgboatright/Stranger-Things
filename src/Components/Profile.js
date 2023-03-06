@@ -20,7 +20,7 @@ const Profile = (props) => {
                 const response = await fetch("https://strangers-things.herokuapp.com/api/2301-ftb-mt-web-ft/users/me", {
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`
                     }
                 })
 
@@ -39,7 +39,17 @@ const Profile = (props) => {
     return (
         <div>
             {
-                props.isLoggedIn ? <h3>Welcome, {myData.username}</h3> : <h3>Please login or register for a new account!</h3>
+                props.isLoggedIn ?
+                    <div>
+                        <h3>Welcome, {myData.username}</h3>
+                        <h3>Your messages: {myData.messages}</h3>
+                        <h3>Your posts:
+                            <p>{myData.posts?.map((post) => (post.title + " " + post.description))}</p>
+                        </h3>
+                    </div>
+                    :
+                    <h3>Please login or register for a new account!</h3>
+
             }
         </div>
     )

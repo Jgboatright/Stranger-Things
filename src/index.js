@@ -1,10 +1,11 @@
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { AllPosts, SinglePost, Register, Login, CreatePost, Logout, Profile } from "./Components";
+import { AllPosts, SinglePost, Register, Login, CreatePost, Logout, Profile, Update } from "./Components";
 
 const App = () => {
     const [posts, setPosts] = useState([]);
+    const [postId, setPostId] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     async function fetchSomePosts() {
@@ -13,7 +14,7 @@ const App = () => {
             const translatedData = await response.json();
             // console.log(response);
             console.log(translatedData);
-            setPosts(translatedData.data.posts);
+            setPosts(translatedData.data.posts.reverse());
         } catch (error) {
             console.log(error);
         }
@@ -26,21 +27,25 @@ const App = () => {
         <BrowserRouter>
             <div>
                 Stranger Things
-                <Logout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+                <Logout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
                 <nav>
                     <Link to="/" > Homepage </Link>
                     {
-                        isLoggedIn ? "" : (
+                        isLoggedIn === true ?
                             <section>
-                                <Link to="/Login">Log In</Link>
-                                <Link to="/Register">Register</Link>
                                 <Link to="/Profile">Profile</Link>
                             </section>
-                        )
+                            : (
+                                <section>
+                                    <Link to="/Login">Log In</Link>
+                                    <Link to="/Register">Register</Link>
+                                </section>
+                            )
                     }
                 </nav>
-
                 <CreatePost posts={posts} setPosts={setPosts} />
+                <Update posts={posts} setPosts={setPosts} postId={postId} setPostId={setPostId} />
+
 
 
                 <Routes>

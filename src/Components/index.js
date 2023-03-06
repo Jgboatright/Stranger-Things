@@ -4,6 +4,6 @@ export { default as Register } from "./Register";
 export { default as Login } from "./Login";
 export { default as CreatePost } from "./CreatePost" ;
 export { default as Logout } from "./Logout";
-export { default as Profile } from "./Profile"
-
+export { default as Profile } from "./Profile";
+export { default as Update } from "./Update";
 // all components are here

@@ -16,10 +16,14 @@ const AllPosts = (props) => {
                                 <p>Price: {singlePost.price}</p>
                                 <p>Description: {singlePost.description}</p>
                                 <br />
+                                <button>Test Button</button>
                             </div>
                         )
                     }) : <div>Data is loading....</div>
                 }
+
+                
+
             </section>
         </div>
     )

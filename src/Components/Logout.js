@@ -15,33 +15,34 @@ const Logout = (props) => {
         }
     }, [props.isLoggedIn]); 
 
-    async function logOut(e) {
-        e.preventDefault();
-        try {
-            localStorage.removeItem("token");
-            props.setIsLoggedIn(false);
-            navigate("/")
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    
-
     // async function logOut(e) {
     //     e.preventDefault();
     //     try {
-    //         if (props.isLoggedIn === true) {
-    //             localStorage.removeItem("token");
-    //             props.setIsLoggedIn(false);
-    //             navigate("/");
-    //         } else {
-    //             props.setIsLoggedIn(false);
-    //             console.log("No token exists!");
-    //         }
+    //         localStorage.removeItem("token");
+    //         props.setIsLoggedIn(false);
+    //         navigate("/")
     //     } catch (error) {
     //         console.log(error);
     //     }
     // }
+    
+
+    async function logOut(e) {
+        e.preventDefault();
+        try {
+            if (props.isLoggedIn === true) {
+                localStorage.removeItem("token");
+                props.setIsLoggedIn(false);
+                navigate("/");
+                // document.location.reload
+            } else {
+                props.setIsLoggedIn(false);
+                console.log("No token exists!");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div>
